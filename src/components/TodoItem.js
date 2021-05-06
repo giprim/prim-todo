@@ -42,18 +42,18 @@ function TodoItem({ todo }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 70,
+    height: 60,
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: theme.light,
+    backgroundColor: theme.mdDark,
     borderRadius: 100 / 3,
     padding: 10,
     lineHeight: 1.5,
   },
   common: {
     fontSize: 18,
-    color: theme.mdDark,
+    color: theme.light,
     width: '15%',
   },
   text: {

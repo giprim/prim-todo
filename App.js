@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, TextInput, View } from 'react-native';
 import AppLayout from './src/components/AppLayout';
 import TodoItem from './src/components/TodoItem';
 import { v4 as uuid4 } from 'uuid';
 import ListSpacer from './src/components/ListSpacer';
+import theme from './src/config/theme';
+import Heading from './src/components/Heading';
 
 const initialTodos = [
   {
-    id: () => uuid4(),
+    id: 1,
     todo:
       'I have to spend at least eight hours coding so it reflects on my time doctor',
   },
   {
-    id: () => uuid4(),
+    id: 2,
     todo:
       'I have to spend at least eight hours coding so it reflects on my time doctor',
   },
@@ -23,16 +25,24 @@ export default function App() {
 
   return (
     <AppLayout>
-      <FlatList
-        data={todos}
-        renderItem={({ item }) => <TodoItem todo={item.todo} />}
-        keyExtractor={({ id }) => id.toString()}
-        ItemSeparatorComponent={ListSpacer}
-      />
-
-      {/* <View style={styles.container}>
-        <TodoItem todo='I have to spend at least eight hours coding so it reflects on my time doctor' />
-  </View> */}
+      <View style={styles.container}>
+        <View>
+          <Heading title='Tasks' />
+          <FlatList
+            data={todos}
+            renderItem={({ item }) => <TodoItem todo={item.todo} />}
+            keyExtractor={({ id }) => id.toString()}
+            ItemSeparatorComponent={ListSpacer}
+          />
+        </View>
+        <View style={styles.inputHolder}>
+          <TextInput
+            style={styles.input}
+            placeholder='Add a todo'
+            placeholderTextColor={theme.light}
+          />
+        </View>
+      </View>
     </AppLayout>
   );
 }
@@ -40,7 +50,23 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+  },
+  inputHolder: {
+    alignSelf: 'flex-end',
+    backgroundColor: theme.mdDark,
+    width: '95%',
+    alignSelf: 'center',
+    height: 60,
+    margin: 'auto',
+    borderRadius: 100 / 3,
+    marginBottom: 15,
+    color: theme.light,
+  },
+  input: {
+    width: '100%',
+    padding: 20,
+    fontSize: 18,
+    color: theme.white,
   },
 });
