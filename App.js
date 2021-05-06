@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import 'react-native-get-random-values';
+import React, { useMemo, useState } from 'react';
 import { FlatList, StyleSheet, TextInput, View } from 'react-native';
+import { v4 as uuid } from 'uuid';
+
 import AppLayout from './src/components/AppLayout';
 import TodoItem from './src/components/TodoItem';
-import { v4 as uuid4 } from 'uuid';
 import ListSpacer from './src/components/ListSpacer';
 import theme from './src/config/theme';
 import Heading from './src/components/Heading';
@@ -21,8 +23,15 @@ const initialTodos = [
 ];
 
 export default function App() {
-  const [todos, setTodos] = useState(initialTodos);
+  const [todos, setTodos] = useState([]);
+  const [text, setText] = useState('');
 
+  const handleSubmit = () => {
+    setTodos((prev) => [...prev, { id: uuid(), todo: text }]);
+    setText('');
+  };
+
+  useMemo(() => console.log({ todos }), [todos]);
   return (
     <AppLayout>
       <View style={styles.container}>
@@ -40,6 +49,12 @@ export default function App() {
             style={styles.input}
             placeholder='Add a todo'
             placeholderTextColor={theme.light}
+            onChangeText={setText}
+            value={text}
+            blurOnSubmit={true}
+            onSubmitEditing={handleSubmit}
+            autoFocus={true}
+            multiline={true}
           />
         </View>
       </View>
