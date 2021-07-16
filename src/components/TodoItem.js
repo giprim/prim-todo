@@ -11,19 +11,19 @@ function TodoItem({ item, renderRightAction, handleChecked, todosArray }) {
   const [checkBoxState, toggleCheckBoxState] = useState(false);
   const handleExpand = () => {};
 
-  const handleTodoChecked = (value) => {
+  const handleTodoChecked = async (value) => {
     toggleCheckBoxState(value);
-    handleChecked(item, checkBoxState);
+    await handleChecked(item, value);
   };
 
   useEffect(() => {
-    if (item.done) toggleCheckBoxState(item.done);
+    toggleCheckBoxState(item.done);
   }, []);
 
   return (
     <Swipeable renderRightActions={renderRightAction}>
       <TouchableOpacity
-        style={[styles.container, checkBoxState ? styles.done : '']}
+        style={[styles.container, item.done ? styles.done : '']}
         onPress={handleExpand}>
         <CheckBox
           disabled={false}
@@ -37,7 +37,7 @@ function TodoItem({ item, renderRightAction, handleChecked, todosArray }) {
           style={[
             styles.common,
             styles.text,
-            { textDecorationLine: checkBoxState ? 'line-through' : 'none' },
+            { textDecorationLine: item.done ? 'line-through' : 'none' },
           ]}>
           {item.todo}
         </Text>

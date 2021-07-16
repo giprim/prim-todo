@@ -12,7 +12,10 @@ export const useTodo = () => {
   const fetchData = async () => {
     try {
       const localData = await AsyncStorage.getItem(STORE_TODO);
-      if (localData !== null) return setTodos(JSON.parse(localData));
+      if (localData !== null) {
+        // console.log(JSON.parse(localData));
+        return setTodos(JSON.parse(localData));
+      }
     } catch (e) {
       console.error({ e });
     }
@@ -24,14 +27,18 @@ export const useTodo = () => {
     storeData(newTodos);
   };
 
-  const handleChecked = (item, checkBoxValue) => {
+  const handleChecked = async (item, checkBoxValue) => {
     let data = todos.filter((initialTodo) => initialTodo.id === item.id)[0];
     let array = todos.filter((initialTodo) => initialTodo.id !== item.id);
     data = { ...data, done: checkBoxValue };
-    if (data.done) array.unshift(data);
-    else array.push(data);
-    setTodos(array);
-    console.log(data);
+    if (data.done) array.push(data);
+    else array.unshift(data);
+
+    setTodos(() => {
+      storeData(array);
+      //   console.log(array);
+      return array;
+    });
   };
 
   const handleSubmit = () => {
