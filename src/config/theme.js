@@ -7,4 +7,5 @@ export default {
   important: '#ea2c62',
   success: '#3797a4',
   danger: '#ff5252',
+  done: '#30425E',
 };
