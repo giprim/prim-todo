@@ -28,7 +28,6 @@ export const useTodo = () => {
     let data = todos.filter((initialTodo) => initialTodo.id === item.id)[0];
     let array = todos.filter((initialTodo) => initialTodo.id !== item.id);
     data = { ...data, done: checkBoxValue };
-    console.log(data.done, '==============');
     if (data.done) array.unshift(data);
     else array.push(data);
     setTodos(array);
